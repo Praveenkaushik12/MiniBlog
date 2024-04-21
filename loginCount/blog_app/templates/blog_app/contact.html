@@ -1,0 +1,28 @@
+{% extends 'blog_app/base.html' %} {% load static %} {% block content %}
+
+<div class="col-sm-10 mx-5">
+    <h1 class="my-5">Contact Form</h1>
+    <form id="contact_form" name="contact_form" method="post">
+      <div class="mb-3 row">
+        <div class="col">
+          <label for="first_name">First Name</label>
+          <input type="text" required maxlength="50" class="form-control" id="first_name" name="first_name">
+        </div>
+        <div class="col">
+          <label for="last_name">Last Name</label>
+          <input type="text" required maxlength="50" class="form-control" id="last_name" name="last_name">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email_addr">Email address</label>
+        <input type="email" required maxlength="50" class="form-control" id="email_addr" name="email" placeholder="name@example.com">
+      </div>
+      <div class="mb-3">
+        <label for="message">Message</label>
+        <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+{% endblock content %}

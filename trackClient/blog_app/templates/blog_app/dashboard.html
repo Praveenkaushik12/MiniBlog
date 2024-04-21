@@ -1,0 +1,79 @@
+{% extends 'blog_app/base.html' %} {% load static %}
+
+{% block msg %}
+<div class="col-sm-10">
+  {% if messages %}
+  {% for message in messages %}
+  <div {% if message.tags %} class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert" {% endif %}>
+    {{message}}<button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  
+  {% endfor %}
+  {% endif %}
+</div>
+  
+{% endblock %}
+
+
+{% block side %}
+  <div class="col-sm-2 text-center text-white my-5">
+    <h4 class="my-5">Profile</h4>
+    <h5>{{full_name}}</h5>
+    
+    {% for group in groups  %}
+      <p>{{group.name}}</p>
+    {% endfor %} 
+    <h5>{{ip}}</h5>
+  </div>
+{% endblock side %}
+  
+
+
+
+
+{% block content %}
+  <div class="col-sm-10">
+  <h3 class="my-5">Dashboard Page</h3>
+  <h4 class="text-center alert alert-info mt-3">Show Post</h4>
+  <a href="{% url 'addpost' %}" class="btn btn-success mb-5">Add Post</a>
+  {% if blogs %}
+  <table class="table table-hover bg-white">
+    <thead>
+      <tr class="text-center">
+        <th scope="col" style="width:2%">ID</th>
+        <th scope="col" style="width:28%">Title</th>
+        <th scope="col" style="width:55%">Description</th>
+        <th scope="col" style="width:15%">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for blog in blogs %}
+      <tr>
+        <th scope="row">{{blog.id}}</th>
+        <td>{{blog.title}}</td>
+        <td>{{blog.desc}}</td>
+        <td class="text-center">
+          <a href="{% url 'update' blog.id %}" class="btn btn-warning">Edit</a>
+          
+          {% if perms.blog_app.delete_blog %}
+            <form action="{% url 'delete' blog.id %}" method="POST" class="d-inline">
+            {% csrf_token %}
+            <input type="submit" value="Delete" class="btn btn-danger"></form>
+          {% endif %}
+            
+          
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <h4 class="text-center alert alert-warning">No Records</h4>
+  {% endif %}
+{% endblock content %}
+  
